@@ -1,0 +1,220 @@
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+
+export async function GET(req: Request) {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { searchParams } = new URL(req.url);
+    const categoryId = searchParams.get("categoryId");
+    const search = searchParams.get("search");
+    const excludeCategoryName = searchParams.get("excludeCategoryName");
+
+    const where: any = { isActive: true };
+
+    if (categoryId) {
+      const catId = parseInt(categoryId);
+      const subCats = await prisma.category.findMany({
+        where: { parentCategoryId: catId },
+        select: { id: true },
+      });
+      const catIds = [catId, ...subCats.map((sc) => sc.id)];
+      where.categoryId = {
+        in: catIds,
+      };
+    }
+
+    if (excludeCategoryName) {
+      // Find the category by name (case-insensitive if possible, we'll just match exact or lowercase)
+      const excludeCat = await prisma.category.findFirst({
+        where: { name: { equals: excludeCategoryName, mode: 'insensitive' } },
+        include: { subCategories: true }
+      });
+      
+      if (excludeCat) {
+        const excludeCatIds = [excludeCat.id, ...excludeCat.subCategories.map(sc => sc.id)];
+        
+        // If we already have a category filter, we must use AND or just merge.
+        // It's safer to just set NOT IN
+        where.categoryId = {
+          ...(where.categoryId || {}),
+          notIn: excludeCatIds
+        };
+      }
+    }
+
+    if (search) {
+      where.OR = [
+        { name: { contains: search, mode: 'insensitive' } },
+        { brand: { contains: search, mode: 'insensitive' } },
+        { barcode: { contains: search, mode: 'insensitive' } },
+      ];
+    }
+
+    const pageStr = searchParams.get("page");
+    const limitStr = searchParams.get("limit");
+    
+    let page = 1;
+    let limit = 50;
+    
+    if (pageStr) page = parseInt(pageStr);
+    if (limitStr) limit = parseInt(limitStr);
+    
+    // Support bypassing pagination if limit is 0 or -1 (or just very large)
+    const skip = limit > 0 ? (page - 1) * limit : 0;
+    const take = limit > 0 ? limit : undefined;
+
+    const products = await prisma.product.findMany({
+      where,
+      skip,
+      take,
+      include: {
+        category: {
+          include: {
+            parentCategory: true,
+          },
+        },
+        units: {
+          where: {
+            status: 'in_stock'
+          }
+        }
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    const total = limit > 0 ? await prisma.product.count({ where }) : products.length;
+    const hasMore = limit > 0 ? skip + products.length < total : false;
+
+    // Mask cost price for staff
+    let finalProducts = products;
+    if (session.user.role === "staff") {
+      finalProducts = products.map((product) => {
+        const { costPrice, ...rest } = product;
+        return rest as any;
+      });
+    }
+
+    if (pageStr || limitStr) {
+      return NextResponse.json({
+        items: finalProducts,
+        hasMore,
+        total
+      });
+    }
+
+    // Backward compatibility for calls without pagination params
+    return NextResponse.json(finalProducts);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return NextResponse.json({ error: "Failed to fetch products" }, { status: 500 });
+  }
+}
+
+export async function POST(req: Request) {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session || session.user.role !== "owner") {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    const body = await req.json();
+    const {
+      categoryId,
+      name,
+      brand,
+      productType,
+      costPrice,
+      sellingPrice,
+      lowStockThreshold,
+      initialQuantity,
+      imeis,
+      imageUrl,
+      barcode,
+    } = body;
+
+    if (!categoryId || !name || !productType || !costPrice || !sellingPrice) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    }
+
+    const product = await prisma.$transaction(async (tx) => {
+      // 1. Create the product
+      const newProduct = await tx.product.create({
+        data: {
+          categoryId: parseInt(categoryId),
+          name,
+          brand,
+          productType,
+          costPrice: parseFloat(costPrice),
+          sellingPrice: parseFloat(sellingPrice),
+          lowStockThreshold: parseInt(lowStockThreshold) || 5,
+          imageUrl,
+          barcode: barcode || null,
+          quantityInStock: 0,
+        },
+      });
+
+      let quantityAdded = 0;
+
+      if (productType === "serialized" || productType === "electronics") {
+        if (imeis && Array.isArray(imeis) && imeis.length > 0) {
+          quantityAdded = imeis.length;
+
+          // Create product units
+          const unitData = imeis.map((imei: string) => ({
+            productId: newProduct.id,
+            imeiNumber: imei.trim(),
+            status: "in_stock",
+            costPrice: parseFloat(costPrice),
+          }));
+
+          await tx.productUnit.createMany({
+            data: unitData,
+          });
+        }
+      } else {
+        const qty = parseInt(initialQuantity);
+        if (qty && qty > 0) {
+          quantityAdded = qty;
+        }
+      }
+
+      if (quantityAdded > 0) {
+        // Create stock-in record
+        await tx.stockInRecord.create({
+          data: {
+            productId: newProduct.id,
+            quantityAdded,
+            costPrice: parseFloat(costPrice),
+            addedByUserId: parseInt(session.user.id),
+          },
+        });
+
+        // Update the quantity in stock
+        return await tx.product.update({
+          where: { id: newProduct.id },
+          data: {
+            quantityInStock: quantityAdded,
+          },
+        });
+      }
+
+      return newProduct;
+    });
+
+    return NextResponse.json(product, { status: 201 });
+  } catch (error: any) {
+    console.error("Error creating product:", error);
+    if (error.code === 'P2002') {
+       return NextResponse.json({ error: "One or more IMEIs already exist in the system." }, { status: 400 });
+    }
+    return NextResponse.json({ error: error.message || "Failed to create product" }, { status: 500 });
+  }
+}
