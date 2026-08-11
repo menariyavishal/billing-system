@@ -43,12 +43,15 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Switch to a separate branch just for backups
-          git checkout -B database-backups
+          # Fetch the existing database-backups branch from GitHub
+          git fetch origin database-backups || true
+          
+          # Switch to the backups branch (preserving the new .sql file we just created)
+          git checkout database-backups 2>/dev/null || git checkout -b database-backups
           
           git add mobile-shop/db-backups/
           
           git commit -m "chore: nightly database backup" || echo "No changes to commit"
           
-          # Push the changes to the separate branch
-          git push -f origin database-backups
+          # Push normally (no force push) so we keep all 30 days of history!
+          git push origin database-backups
