@@ -1,0 +1,56 @@
+name: Nightly Database Backup
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs at midnight UTC every day
+  workflow_dispatch: # Allows you to run it manually from the Actions tab
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Required to push changes back to the repository
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Install PostgreSQL Client
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+          
+      - name: Create backup folder if it doesn't exist
+        run: mkdir -p mobile-shop/db-backups
+        
+      - name: Run Database Backup
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          # Generate a filename with the current date
+          FILENAME="backup-$(date +'%Y-%m-%d_%H-%M-%S').sql"
+          
+          # Run pg_dump to extract the database
+          # We use --no-owner and --no-acl to make the backup portable
+          pg_dump "$DATABASE_URL" -F p --no-owner --no-acl > "mobile-shop/db-backups/$FILENAME"
+          
+          echo "Successfully created backup: $FILENAME"
+          
+      - name: Cleanup backups older than 30 days
+        run: |
+          echo "Cleaning up old backups..."
+          # Find all .sql files in the backup directory older than 30 days and delete them
+          find mobile-shop/db-backups -type f -name "backup-*.sql" -mtime +30 -exec rm {} \;
+          
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git add mobile-shop/db-backups/
+          
+          # We use [skip ci] to tell Vercel NOT to trigger a redeployment for this commit
+          git commit -m "chore: nightly database backup [skip ci]" || echo "No changes to commit"
+          
+          git push

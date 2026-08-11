@@ -13,6 +13,11 @@ export function isBotConfigured(): boolean {
   return !!(process.env.WHATSAPP_BOT_URL && process.env.WHATSAPP_API_KEY);
 }
 
+function normalizeBotUrl(rawUrl: string) {
+  const trimmed = rawUrl.trim();
+  return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+}
+
 async function botFetch(endpoint: string, options: RequestInit = {}) {
   const botUrl = process.env.WHATSAPP_BOT_URL;
   const apiKey = process.env.WHATSAPP_API_KEY;
@@ -21,7 +26,7 @@ async function botFetch(endpoint: string, options: RequestInit = {}) {
     throw new Error("WHATSAPP_BOT_URL or WHATSAPP_API_KEY not configured");
   }
 
-  const res = await fetch(`${botUrl}${endpoint}`, {
+  const res = await fetch(`${normalizeBotUrl(botUrl)}${endpoint}`, {
     ...options,
     cache: "no-store",
     headers: {
