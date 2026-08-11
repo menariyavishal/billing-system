@@ -43,9 +43,12 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
+          # Switch to a separate branch just for backups
+          git checkout -B database-backups
+          
           git add mobile-shop/db-backups/
           
-          # We use [skip ci] to tell Vercel NOT to trigger a redeployment for this commit
-          git commit -m "chore: nightly database backup [skip ci]" || echo "No changes to commit"
+          git commit -m "chore: nightly database backup" || echo "No changes to commit"
           
-          git push
+          # Push the changes to the separate branch
+          git push -f origin database-backups
