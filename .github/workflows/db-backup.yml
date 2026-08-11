@@ -16,11 +16,6 @@ jobs:
           # Required to push changes back to the repository
           token: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: Install PostgreSQL Client
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y postgresql-client
-          
       - name: Create backup folder if it doesn't exist
         run: mkdir -p mobile-shop/db-backups
         
@@ -31,9 +26,9 @@ jobs:
           # Generate a filename with the current date
           FILENAME="backup-$(date +'%Y-%m-%d_%H-%M-%S').sql"
           
-          # Run pg_dump to extract the database
-          # We use --no-owner and --no-acl to make the backup portable
-          pg_dump "$DATABASE_URL" -F p --no-owner --no-acl > "mobile-shop/db-backups/$FILENAME"
+          # Use the official Postgres 18 Docker image to run pg_dump. 
+          # This guarantees we always have the correct, latest version to match Neon's servers.
+          docker run --rm postgres:18-alpine pg_dump "$DATABASE_URL" -F p --no-owner --no-acl > "mobile-shop/db-backups/$FILENAME"
           
           echo "Successfully created backup: $FILENAME"
           
