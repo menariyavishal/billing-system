@@ -157,7 +157,7 @@ export default function Services() {
               transition={{ duration: 0.5, delay: 0.25 }}
               className="text-slate-500 dark:text-slate-400 leading-relaxed font-semibold text-base sm:text-lg"
             >
-              Whether you&apos;re purchasing a new smartphone, upgrading your laptop, looking for accessories, or repairing your mobile device, Shree Krishna Computers offers reliable products and trusted services to meet your everyday technology needs.
+              Whether you&apos;re purchasing a new smartphone, upgrading your laptop, looking for accessories, or repairing your mobile device, Vision Codex Demo offers reliable products and trusted services to meet your everyday technology needs.
             </motion.p>
           </div>
 
@@ -212,7 +212,7 @@ export default function Services() {
               Why Choose Us
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-              Why Choose Shree Krishna Computers?
+              Why Choose Vision Codex Demo?
             </h2>
             <div className="h-1 w-20 bg-blue-600 rounded-full mx-auto" />
             <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-semibold text-base sm:text-lg">

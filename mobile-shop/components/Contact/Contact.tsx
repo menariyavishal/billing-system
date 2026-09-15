@@ -42,10 +42,10 @@ export default function Contact() {
     e.preventDefault();
     setLoading(true);
 
-    // Owner's WhatsApp Number: +91 99282 03203
-    const whatsappNumber = "919928203203";
+    // Owner's WhatsApp Number: +91 94298 06474
+    const whatsappNumber = "919429806474";
     const messageTemplate = 
-`👋 Hello Shree Krishna Computers,
+`👋 Hello Vision Codex Demo,
 
 I have a new inquiry from your website:
 👤 *Name:* ${formData.name}
@@ -77,24 +77,24 @@ ${formData.message}`;
 
   const phoneCard = {
     title: "Call Us",
-    value: "+91  9928203203",
-    href: "tel:+91 9928203203",
+    value: "+91 94298 06474",
+    href: "tel:+919429806474",
     icon: Phone,
     description: "Direct business line for orders and support.",
   };
 
   const emailCard = {
     title: "Email Us",
-    value: "info@shreekrishnacomputers.com",
-    href: "mailto:info@shreekrishnacomputers.com",
+    value: "info.visioncodex@gmail.com",
+    href: "mailto:info.visioncodex@gmail.com",
     icon: Mail,
     description: "Email us for corporate quotes and setups.",
   };
 
   const addressCard = {
     title: "Store Location",
-    value: "Main Bus Stand, Kanore, Udaipur, Rajasthan, 313604",
-    href: "https://www.google.com/maps/place/Shri+Krishna+Computers/@24.4367468,74.2538814,16z/data=!4m6!3m5!1s0x39664a8873356425:0x22a4741aa6db2df9!8m2!3d24.4367468!4d74.2538814!16s%2Fg%2F11w12r_fpt",
+    value: "Udaipur, Rajasthan, India",
+    href: "https://maps.google.com/?q=Udaipur+Rajasthan+India",
     icon: MapPin,
     description: "Click to view location and directions on Google Maps.",
   };
@@ -175,7 +175,7 @@ ${formData.message}`;
                 Our Store
               </span>
               <h3 className="text-2xl font-extrabold text-slate-800 dark:text-white">
-                Shree Krishna Computers
+                Vision Codex Demo
               </h3>
               <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
                 Your trusted local computer and electronics destination. We supply authentic brands, provide smart EMI setups, and offer professional repair and installation services.
@@ -574,7 +574,7 @@ ${formData.message}`;
             </div>
             
             <a
-              href="https://www.instagram.com/shree_krishna_computer_7441"
+              href="https://www.instagram.com/visioncodex.in"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-yellow-400 via-pink-555 to-purple-655 hover:from-yellow-500 hover:to-purple-700 text-white font-bold text-sm py-4 px-6 rounded-xl shadow-md hover:shadow-lg transition-all active:scale-95 cursor-pointer mb-2"
@@ -602,11 +602,11 @@ ${formData.message}`;
                   </h4>
                 </div>
                 <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                  Main Bus Stand, Kanore, Udaipur, Rajasthan 313604
+                  Udaipur, Rajasthan, India
                 </p>
               </div>
               <a
-                href="https://www.google.com/maps/place/Shri+Krishna+Computers/@24.4367468,74.2538814,16z/data=!4m6!3m5!1s0x39664a8873356425:0x22a4741aa6db2df9!8m2!3d24.4367468!4d74.2538814!16s%2Fg%2F11w12r_fpt"
+                href="https://maps.google.com/?q=Udaipur+Rajasthan+India"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 bg-blue-50 hover:bg-blue-100 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-bold text-xs py-2 px-4 rounded-xl transition-all active:scale-95 cursor-pointer shrink-0"
@@ -619,7 +619,7 @@ ${formData.message}`;
             {/* Clean Interactive Map */}
             <div className="flex-grow w-full relative overflow-hidden bg-slate-100 dark:bg-slate-950">
               <iframe
-                title="Shree Krishna Computers Location Map"
+                title="Vision Codex Demo Location Map"
                 src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7264.809043642447!2d74.2538814!3d24.4367468!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39664a8873356425%3A0x22a4741aa6db2df9!2sShri%20Krishna%20Computers!5e0!3m2!1sen!2sin!4v1783234530970!5m2!1sen!2sin"
                 width="100%"
                 height="100%"

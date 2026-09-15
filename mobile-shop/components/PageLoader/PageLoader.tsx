@@ -61,8 +61,8 @@ export default function PageLoader({ onComplete }: PageLoaderProps) {
           className="w-24 h-24 rounded-2xl bg-white dark:bg-slate-900 overflow-hidden shadow-md border border-slate-100 dark:border-slate-800 flex items-center justify-center shrink-0 mb-6"
         >
           <Image 
-            src="/shreekrishnalogo1.jpg" 
-            alt="Shree Krishna Computers Logo" 
+            src="/logovcd.png" 
+            alt="Vision Codex Demo Logo" 
             width={96} 
             height={96} 
             className="h-full w-full object-contain"
@@ -77,7 +77,7 @@ export default function PageLoader({ onComplete }: PageLoaderProps) {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-2xl font-black text-slate-900 dark:text-white tracking-tight text-center"
         >
-          Shree Krishna Computers
+          Vision Codex Demo
         </motion.h2>
 
         {/* Small subtitle details */}

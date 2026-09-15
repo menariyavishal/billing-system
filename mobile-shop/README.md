@@ -7,7 +7,7 @@
   <img src="https://img.shields.io/badge/SQLite-Local-003B57?style=for-the-badge&logo=sqlite" alt="SQLite" />
 </p>
 
-<h1 align="center">🏪 Shree Krishna Computer</h1>
+<h1 align="center">🏪 Vision Codex Demo</h1>
 <h3 align="center">POS · Inventory · Billing · WhatsApp Integration</h3>
 
 <p align="center">
@@ -321,5 +321,5 @@ This project is private and proprietary. All rights reserved.
 ---
 
 <p align="center">
-  Built with ❤️ for <strong>Shree Krishna Computer, Kanore</strong>
+  Built with ❤️ for <strong>Vision Codex</strong>
 </p>

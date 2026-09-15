@@ -33,11 +33,16 @@ export default function LoginForm() {
   return (
     <div className="max-w-md w-full space-y-8 glass-card p-10 z-10">
       <div>
+        <div className="flex justify-center mb-4">
+          <div className="w-16 h-16 rounded-2xl bg-white/10 p-2 border border-white/20 shadow-lg flex items-center justify-center">
+            <img src="/logovcd.png" alt="Logo" className="w-full h-full object-contain" />
+          </div>
+        </div>
         <h2 className="mt-2 text-center text-3xl font-medium text-white tracking-wide">
-          Shree Krishna Computer
+          Vision Codex Demo
         </h2>
         <p className="mt-3 text-center text-xs text-white/60 font-semibold uppercase tracking-widest">
-          Owner: Lalit Menariya
+          Owner: Vision Codex
         </p>
         <p className="mt-6 text-center text-xl text-white/90 font-light">
           Welcome Back, Owner

@@ -107,20 +107,20 @@ export default function InvoiceTemplate({
         </div>
 
         <div className="flex items-center justify-between gap-4 mb-2">
-          {/* Logo icon of Lord Krishna flute/peacock feather */}
+          {/* Logo */}
           <div className="flex-shrink-0">
-            <img src="/shreekrishnalogo1.jpg" alt="Logo" className="w-16 h-16 object-contain rounded-md" />
+            <img src="/logobill.png" alt="Logo" className="w-16 h-16 object-contain rounded-md" />
           </div>
 
           <div className="text-center flex-1">
             <h1 className="text-2xl font-black tracking-tight text-[#1b3f8b] leading-none uppercase">
-              Shree Krishna Computer
+              Vision Codex Demo
             </h1>
             <p className="text-[10px] text-gray-700 font-bold mt-1">
-              Main Bus Stand Kanore, Distt. Udaipur
+              Udaipur, Rajasthan, India
             </p>
             <p className="text-[10px] text-gray-700 font-bold">
-              ✉ s.krishnacom.kanore@gmail.com
+              ✉ info.visioncodex@gmail.com
             </p>
           </div>
 
@@ -140,9 +140,9 @@ export default function InvoiceTemplate({
 </div>
 
         <div className="flex justify-between items-center pt-1.5 text-[10px] font-black text-[#1b3f8b]">
-          <div>Owner: Lalit Menariya</div>
+          <div>Owner: Vision Codex</div>
           <div className="flex items-center gap-1 font-bold">
-            <span>📞 9928203203</span>
+            <span>📞 9429806474</span>
           </div>
         </div>
       </div>
@@ -324,7 +324,7 @@ export default function InvoiceTemplate({
           Cust.Signature
         </div>
         <div className="text-center w-48">
-          <div className="text-[9px] font-black mb-6">For-SHREE KRISHNA COMPUTER</div>
+          <div className="text-[9px] font-black mb-6">For-VISION CODEX DEMO</div>
           <div className="border-t border-[#1b3f8b] pt-1 font-bold">
             Auth.Signature
           </div>

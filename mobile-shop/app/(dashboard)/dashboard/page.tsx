@@ -232,11 +232,16 @@ export default function DashboardPage() {
     <div className="space-y-8 pb-12">
       {/* Welcome & Quick Info */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-        <div>
-          <h2 className="text-2xl font-bold text-black tracking-tight">Shree Krishna Computer</h2>
-          <p className="text-sm text-gray-500 mt-1">
-            Real-time business inventory status and billing sales overview.
-          </p>
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 bg-white border border-gray-200 flex items-center justify-center p-1">
+            <img src="/logovcd.png" alt="Logo" className="w-full h-full object-contain" />
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold text-black tracking-tight">Vision Codex Demo</h2>
+            <p className="text-sm text-gray-500 mt-0.5">
+              Real-time business inventory status and billing sales overview.
+            </p>
+          </div>
         </div>
         <div className="flex gap-2">
           <button
@@ -275,7 +280,7 @@ export default function DashboardPage() {
               )}
             </h3>
             <p className="text-xs text-gray-500 mt-1 max-w-xl">
-              Connect Lalit Menariya's WhatsApp account to automatically deliver professionally-formatted PDF invoices directly to clients upon checkout.
+              Connect Vision Codex's WhatsApp account to automatically deliver professionally-formatted PDF invoices directly to clients upon checkout.
             </p>
             {whatsappSettings?.status === "connected" && whatsappSettings?.ownerPhone && (
               <p className="text-xs font-semibold text-green-700 mt-2 flex items-center gap-1">
@@ -343,12 +348,12 @@ export default function DashboardPage() {
                     const blob = await generateBillPdfBlob(bill);
 
                     const formData = new FormData();
-                    formData.append("file", blob, `SKC_Invoice_${bill.billNumber}.pdf`);
+                    formData.append("file", blob, `VCD_Invoice_${bill.billNumber}.pdf`);
                     formData.append("customerName", bill.customer?.name || "Customer");
                     formData.append("mobileNumber", phone);
                     formData.append("billNumber", bill.billNumber);
                     
-                    const reminderMsg = `Hello ${bill.customer?.name || "Customer"},\nThis is Shree Krishna Computer. Your pending due of ₹${parseFloat(bill.dueAmount).toFixed(2)} from bill #${bill.billNumber} is overdue. Please settle it at your earliest convenience.`;
+                    const reminderMsg = `Hello ${bill.customer?.name || "Customer"},\nThis is Vision Codex Demo. Your pending due of ₹${parseFloat(bill.dueAmount).toFixed(2)} from bill #${bill.billNumber} is overdue. Please settle it at your earliest convenience.`;
                     formData.append("customMessage", reminderMsg);
 
                     const res = await fetch(`/api/v1/bills/${bill.id}/whatsapp/upload`, {

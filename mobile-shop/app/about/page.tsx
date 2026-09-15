@@ -12,7 +12,7 @@ export default function AboutPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">About Our Business</h1>
             <p className="text-slate-400 text-sm mt-3 font-semibold uppercase tracking-wider">
-              Serving Udaipur and Kheroda with trusted technology solutions
+              Serving Udaipur, Rajasthan with trusted technology solutions
             </p>
           </div>
         </div>

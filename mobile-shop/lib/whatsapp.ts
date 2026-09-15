@@ -64,7 +64,7 @@ export async function attemptWhatsappDelivery(deliveryId: number, pdfBase64?: st
   } else {
     // Attempt real WhatsApp message delivery
     try {
-      let messageText = `Hello ${delivery.customerName}, here is your invoice #${delivery.billNumber} from Shree Krishna Computer.`;
+      let messageText = `Hello ${delivery.customerName}, here is your invoice #${delivery.billNumber} from Vision Codex Demo.`;
       
       if (delivery.customMessage) {
         messageText = delivery.customMessage;
@@ -81,7 +81,7 @@ export async function attemptWhatsappDelivery(deliveryId: number, pdfBase64?: st
         delivery.mobileNumber,
         messageText,
         delivery.pdfPath,
-        `SKC_Invoice_${delivery.billNumber}.pdf`,
+        `VCD_Invoice_${delivery.billNumber}.pdf`,
         pdfBase64
       );
     } catch (error: any) {

@@ -66,12 +66,12 @@ export default function DuePaymentsPage() {
           const blob = await generateBillPdfBlob(fullBill);
 
           const formData = new FormData();
-          formData.append("file", blob, `SKC_Invoice_${fullBill.billNumber}.pdf`);
+          formData.append("file", blob, `VCD_Invoice_${fullBill.billNumber}.pdf`);
           formData.append("customerName", fullBill.customer?.name || "Customer");
           formData.append("mobileNumber", fullBill.customer?.phone || fullBill.customerPhone);
           formData.append("billNumber", fullBill.billNumber);
           
-          const settledMsg = `🎉 *Payment Successful!*\n\nHello ${fullBill.customer?.name || 'Customer'},\nYour payment of ₹${existingBill.dueAmount} for Invoice #${fullBill.billNumber} has been completely settled.\n\nThank you for choosing *Shree Krishna Computer*.`;
+          const settledMsg = `🎉 *Payment Successful!*\n\nHello ${fullBill.customer?.name || 'Customer'},\nYour payment of ₹${existingBill.dueAmount} for Invoice #${fullBill.billNumber} has been completely settled.\n\nThank you for choosing *Vision Codex Demo*.`;
           formData.append("customMessage", settledMsg);
 
           await fetch(`/api/v1/bills/${fullBill.id}/whatsapp/upload`, {
@@ -109,7 +109,7 @@ export default function DuePaymentsPage() {
       const blob = await generateBillPdfBlob(bill);
 
       const formData = new FormData();
-      formData.append("file", blob, `SKC_Invoice_${bill.billNumber}.pdf`);
+      formData.append("file", blob, `VCD_Invoice_${bill.billNumber}.pdf`);
       formData.append("customerName", bill.customer?.name || "Customer");
       formData.append("mobileNumber", customerPhone);
       formData.append("billNumber", bill.billNumber);

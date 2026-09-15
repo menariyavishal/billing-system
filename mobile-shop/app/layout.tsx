@@ -13,14 +13,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Shree Krishna Computers",
-  description: "Shree Krishna Computers provides computer sales, laptops, printers, accessories, networking solutions, GST billing, inventory management, and technical support.",
+  title: "Vision Codex Demo",
+  description: "Vision Codex Demo provides computer sales, laptops, printers, accessories, networking solutions, GST billing, inventory management, and technical support.",
   openGraph: {
-    title: "Shree Krishna Computers",
-    description: "Shree Krishna Computers provides computer sales, laptops, printers, accessories, networking solutions, GST billing, inventory management, and technical support.",
+    title: "Vision Codex Demo",
+    description: "Vision Codex Demo provides computer sales, laptops, printers, accessories, networking solutions, GST billing, inventory management, and technical support.",
     type: "website",
     locale: "en_IN",
-    siteName: "Shree Krishna Computers",
+    siteName: "Vision Codex Demo",
   },
 };
 

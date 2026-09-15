@@ -28,10 +28,13 @@ export default async function DashboardLayout({
         {/* Main Content */}
         <div className="flex-1 flex flex-col min-w-0">
           <header className="h-16 bg-white shadow-sm flex items-center justify-between px-6">
-            <div className="md:hidden text-lg font-bold text-black">Shree Krishna Computer</div>
+            <div className="md:hidden flex items-center gap-2">
+              <img src="/logovcd.png" alt="Logo" className="w-8 h-8 object-contain rounded" />
+              <span className="text-lg font-bold text-black">Vision Codex Demo</span>
+            </div>
             <div className="flex items-center space-x-4">
               <span className="text-sm text-gray-600 font-medium">
-                {session.user.role === "owner" ? "Welcome Lalit Menariya" : `Welcome ${session.user.name}`}
+                {session.user.role === "owner" ? "Welcome Vision Codex" : `Welcome ${session.user.name}`}
               </span>
               <NotificationBell />
               <Link

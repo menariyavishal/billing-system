@@ -63,12 +63,12 @@ export default function About() {
             className="lg:col-span-6 space-y-6"
           >
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-              About Shree Krishna Computers
+              About Vision Codex Demo
             </h2>
             <div className="h-1 w-20 bg-blue-600 rounded-full" />
             
             <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-              At Shree Krishna Computers, we are committed to providing quality electronic products and reliable services for everyday technology needs. Whether you&apos;re looking for the latest smartphone, laptop, printer, air conditioner, or genuine accessories, we offer trusted products at competitive prices.
+              At Vision Codex Demo, we are committed to providing quality electronic products and reliable services for everyday technology needs. Whether you&apos;re looking for the latest smartphone, laptop, printer, air conditioner, or genuine accessories, we offer trusted products at competitive prices.
             </p>
             <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
               We also provide professional mobile repair services and customer support to keep your essential devices running smoothly. Our focus is on offering honest advice, genuine products, and building long-term customer relationships based on trust and dependable care.
@@ -80,7 +80,7 @@ export default function About() {
                 Your Trusted Electronics Store
               </h4>
               <p className="text-sm text-blue-50/90 dark:text-blue-100/90 leading-relaxed font-medium">
-                Whether you&apos;re purchasing a new smartphone, upgrading your laptop, buying an air conditioner, looking for genuine accessories, or repairing your mobile device, Shree Krishna Computers is committed to delivering quality products, expert service, and a shopping experience you can trust.
+                Whether you&apos;re purchasing a new smartphone, upgrading your laptop, buying an air conditioner, looking for genuine accessories, or repairing your mobile device, Vision Codex Demo is committed to delivering quality products, expert service, and a shopping experience you can trust.
               </p>
             </div>
 

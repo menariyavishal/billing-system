@@ -72,15 +72,15 @@ afterEach(() => {
 });
 
 describe("Dashboard Page", () => {
-  it("renders Shree Krishna Computer heading and metrics correctly", async () => {
+  it("renders Vision Codex Demo heading and metrics correctly", async () => {
     render(<DashboardPage />);
 
     // Verify loading state is shown initially
-    expect(screen.getByText(/Loading Shree Krishna Computer stats.../i)).toBeInTheDocument();
+    expect(screen.getByText(/Loading Vision Codex Demo stats.../i)).toBeInTheDocument();
 
     // Wait for the dashboard data to load
     await waitFor(() => {
-      expect(screen.getByText("Shree Krishna Computer")).toBeInTheDocument();
+      expect(screen.getByText("Vision Codex Demo")).toBeInTheDocument();
     });
 
     // Check KPI counts

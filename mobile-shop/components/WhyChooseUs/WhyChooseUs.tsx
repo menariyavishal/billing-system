@@ -50,7 +50,7 @@ export default function WhyChooseUs() {
         {/* Title */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Why Choose Shree Krishna Computers?
+            Why Choose Vision Codex Demo?
           </h2>
           <div className="h-1 w-20 bg-blue-600 rounded-full mx-auto" />
           <p className="text-slate-550 leading-relaxed font-medium text-base">

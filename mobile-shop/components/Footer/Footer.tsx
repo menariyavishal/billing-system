@@ -47,21 +47,21 @@ export default function Footer() {
   const contactInfo = [
     {
       label: "Phone",
-      value: "+91 99282 03203",
+      value: "+91 94298 06474",
       icon: Phone,
-      href: "tel:+919928203203",
+      href: "tel:+919429806474",
     },
     {
       label: "Email",
-      value: "info@shreekrishnacomputers.com",
+      value: "info.visioncodex@gmail.com",
       icon: Mail,
-      href: "mailto:info@shreekrishnacomputers.com",
+      href: "mailto:info.visioncodex@gmail.com",
     },
     {
       label: "Store Address",
-      value: "Main Bus Stand, Kanore, Udaipur, Raj., 313604",
+      value: "Udaipur, Rajasthan, India",
       icon: MapPin,
-      href: "https://maps.google.com/?q=Shree+Krishna+Computers+Kanore",
+      href: "https://maps.google.com/?q=Udaipur+Rajasthan+India",
       target: "_blank",
       rel: "noopener noreferrer",
     },
@@ -73,9 +73,9 @@ export default function Footer() {
     },
     {
       label: "Instagram",
-      value: "@shree_krishna_computer_7441",
+      value: "@visioncodex.in",
       icon: FaInstagram,
-      href: "https://www.instagram.com/shree_krishna_computer_7441",
+      href: "https://www.instagram.com/visioncodex.in",
       target: "_blank",
       rel: "noopener noreferrer",
     },
@@ -142,8 +142,8 @@ export default function Footer() {
             <Link href="/" className="flex items-center gap-2.5 group">
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white overflow-hidden shadow-sm border border-slate-200/50 transition-transform group-hover:scale-105 duration-300 shrink-0">
                 <Image 
-                  src="/logo.png" 
-                  alt="Shree Krishna Computers Logo" 
+                  src="/logovcd.png" 
+                  alt="Vision Codex Demo Logo" 
                   width={44} 
                   height={44} 
                   className="h-full w-full object-contain"
@@ -151,7 +151,7 @@ export default function Footer() {
               </div>
               <div className="flex flex-col">
                 <span className="text-lg font-black text-white leading-tight">
-                  Shree Krishna Computers
+                  Vision Codex Demo
                 </span>
                 <span className="text-[9px] text-blue-400 font-bold tracking-widest uppercase mt-0.5">
                   SALES • SERVICE • REPAIR
@@ -160,14 +160,14 @@ export default function Footer() {
             </Link>
 
             <p className="text-sm text-slate-400 leading-relaxed font-medium">
-              Shree Krishna Computers is your trusted destination for mobile phones, laptops, printers, air conditioners, accessories, and professional repair services. We deliver genuine products and customer satisfaction.
+              Vision Codex Demo is your trusted destination for mobile phones, laptops, printers, air conditioners, accessories, and professional repair services. We deliver genuine products and customer satisfaction.
             </p>
 
             {/* Social Icons */}
             <div className="flex items-center gap-3 pt-1">
               <motion.a
                 whileHover={{ scale: 1.1, y: -2 }}
-                href="https://www.instagram.com/shree_krishna_computer_7441"
+                href="https://www.instagram.com/visioncodex.in"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center h-9 w-9 rounded-lg bg-slate-800/40 border border-slate-700/40 text-slate-300 hover:text-pink-500 hover:border-pink-500/50 hover:shadow-[0_0_15px_rgba(236,72,153,0.2)] transition-all duration-300"
@@ -283,7 +283,7 @@ export default function Footer() {
           
           {/* Copyright */}
           <div className="text-slate-500 font-medium">
-            © 2026 Shree Krishna Computers. All Rights Reserved.
+            © 2026 Vision Codex Demo. All Rights Reserved.
           </div>
 
           {/* Powered By VisionTechX */}

@@ -60,7 +60,7 @@ export default function Hero() {
       >
         <Image
           src="/ShreeKrishnaHero.webp"
-          alt="Shree Krishna Computers Storefront Background"
+          alt="Vision Codex Demo Storefront Background"
           fill
           priority
           className="object-contain object-right"
@@ -93,7 +93,7 @@ export default function Hero() {
           >
             <Image
               src="/ShreeKrishnaHero.webp"
-              alt="Shree Krishna Computers Storefront"
+              alt="Vision Codex Demo Storefront"
               fill
               priority
               className="object-cover object-center"
@@ -115,7 +115,7 @@ export default function Hero() {
             {/* Heading with curated gradients */}
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.15] max-w-4xl text-left">
               <motion.span className="block drop-shadow-md text-white" variants={itemVariants}>
-                Shree Krishna Computers
+                Vision Codex Demo
               </motion.span>
               <motion.span
                 className="block bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400 bg-clip-text text-transparent pb-1 drop-shadow-sm"
