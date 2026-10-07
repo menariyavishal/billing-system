@@ -379,42 +379,62 @@ export default function BillingPage() {
 
 
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-5 gap-6 h-[calc(100vh-8rem)]">
+    <div className="flex flex-col xl:grid xl:grid-cols-5 gap-4 sm:gap-6 min-h-[calc(100vh-8rem)]">
       
       {/* LEFT: Live Invoice Preview */}
-      <div className="xl:col-span-2 flex flex-col justify-start bg-gray-50 border border-gray-200 p-4 rounded-xl overflow-y-auto max-h-full">
-        <div className="flex justify-between items-center mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider text-gray-400">Live Bill Preview</span>
-          <span className="text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full font-bold">Real-time update</span>
+      <div className="xl:col-span-2 flex flex-col bg-gray-50 border border-gray-200 rounded-2xl">
+        {/* Preview Header */}
+        <div className="flex justify-between items-center px-4 py-3 bg-white border-b border-gray-200 rounded-t-2xl">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+            <span className="text-xs font-bold uppercase tracking-widest text-gray-500">Live Bill Preview</span>
+          </div>
+          <span className="text-[10px] text-blue-600 bg-blue-50 border border-blue-100 px-2.5 py-0.5 rounded-full font-bold">Real-time update</span>
         </div>
-        <InvoiceTemplate
-          isDraft={true}
-          billNumber="DRAFT"
-          createdAt={new Date()}
-          customerName={customerName}
-          customerAddress={customerAddress}
-          customerPhone={phone}
-          cartItems={cart}
-          subtotal={taxableAmount}
-          grossTotal={grossTotal}
-          discount={parseFloat(discount || "0")}
-          totalAmount={totalAmount}
-          sgstPercent={sgstPercent}
-          cgstPercent={cgstPercent}
-          paidAmount={paidAmount ? parseFloat(paidAmount) : totalAmount}
-          dueAmount={paidAmount ? totalAmount - parseFloat(paidAmount) : 0}
-          paymentMode={paymentMode}
-        />
+        <div className="xl:flex-1 xl:overflow-y-auto p-3 sm:p-4">
+          <InvoiceTemplate
+            isDraft={true}
+            billNumber="DRAFT"
+            createdAt={new Date()}
+            customerName={customerName}
+            customerAddress={customerAddress}
+            customerPhone={phone}
+            cartItems={cart}
+            subtotal={taxableAmount}
+            grossTotal={grossTotal}
+            discount={parseFloat(discount || "0")}
+            totalAmount={totalAmount}
+            sgstPercent={sgstPercent}
+            cgstPercent={cgstPercent}
+            paidAmount={paidAmount ? parseFloat(paidAmount) : totalAmount}
+            dueAmount={paidAmount ? totalAmount - parseFloat(paidAmount) : 0}
+            paymentMode={paymentMode}
+          />
+        </div>
       </div>
 
-      {/* RIGHT: Input form & Terminal */}
-      <div className="xl:col-span-3 bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col h-full overflow-y-auto">
-        <h2 className="text-xl font-bold mb-4 text-black border-b pb-2 flex items-center justify-between">
-          <span>POS Billing Terminal</span>
-          <span className="text-xs text-red-500 font-normal">* Required fields</span>
-        </h2>
+      {/* RIGHT: POS Terminal */}
+      <div className="xl:col-span-3 bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col overflow-hidden">
+        {/* Terminal Header */}
+        <div className="px-4 sm:px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-blue-600 to-indigo-600">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                <span className="text-lg">🧾</span>
+              </div>
+              <div>
+                <h2 className="text-base sm:text-lg font-extrabold text-white leading-tight tracking-tight">POS Billing Terminal</h2>
+                <p className="text-[10px] text-blue-100 font-medium mt-0.5 hidden sm:block">Point-of-Sale Invoice Generator</p>
+              </div>
+            </div>
+            <span className="text-[10px] text-red-200 bg-red-500/20 border border-red-400/30 px-2.5 py-1 rounded-full font-bold">* Required</span>
+          </div>
+        </div>
 
-        {error && <div className="mb-4 text-red-600 bg-red-50 p-3 border border-red-100 rounded-lg text-sm font-semibold">{error}</div>}
+        {/* Scrollable Form Body */}
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-0">
+
+        {error && <div className="mb-4 text-red-600 bg-red-50 p-3 border border-red-100 rounded-xl text-sm font-semibold">{error}</div>}
 
         {/* Product Search - Required highlight */}
         <div className="mb-5">
@@ -461,8 +481,12 @@ export default function BillingPage() {
           </div>
         </div>
 
-        {/* Cart Item Listing - Required highlight */}
-        <div className="flex-1 overflow-y-auto border border-gray-200 rounded-lg mb-5 min-h-[150px]">
+        {/* Cart Item Listing */}
+        <div className="flex items-center gap-2 mt-5 mb-2">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Cart Items</span>
+          {cart.length > 0 && <span className="text-[10px] bg-blue-600 text-white px-1.5 py-0.5 rounded-full font-bold">{cart.length}</span>}
+        </div>
+        <div className="border border-gray-200 rounded-xl mb-5 min-h-[120px] overflow-hidden">
           {cart.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-gray-400 py-8">
               <span className="text-3xl mb-2">🛒</span>
@@ -470,72 +494,74 @@ export default function BillingPage() {
               <span className="text-xs text-gray-400 mt-1">Search above to add products to the invoice</span>
             </div>
           ) : (
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-4 py-2.5 text-left text-xs font-bold text-gray-500 uppercase">Item</th>
-                  <th className="px-4 py-2.5 text-left text-xs font-bold text-gray-500 uppercase">Unit Price</th>
-                  <th className="px-4 py-2.5 text-left text-xs font-bold text-gray-500 uppercase">Qty / IMEI</th>
-                  <th className="px-4 py-2.5 text-right text-xs font-bold text-gray-500 uppercase">Total</th>
-                  <th className="px-4 py-2.5 text-right text-xs font-bold text-gray-500 uppercase"></th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200 text-sm">
-                {cart.map((item) => (
-                  <tr key={item.cartItemId} className="hover:bg-gray-50/50">
-                    <td className="px-4 py-3 whitespace-nowrap">
-                      <div className="font-bold text-gray-900">{item.product.name}</div>
-                      <div className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold">{item.product.productType}</div>
-                    </td>
-                    <td className="px-4 py-3 whitespace-nowrap text-gray-900 font-medium">
-                      ₹{item.product.sellingPrice}
-                    </td>
-                    <td className="px-4 py-3 whitespace-nowrap">
-                      {item.product.productType === "serialized" || item.product.productType === "electronics" ? (
-                        <select
-                          className="border border-gray-300 rounded-md px-2 py-1 text-xs max-w-[180px] font-medium focus:ring-1 focus:ring-blue-500"
-                          value={item.selectedUnitId}
-                          onChange={(e) => updateSelectedUnit(item.cartItemId, e.target.value)}
-                        >
-                          {item.product.units?.map((u: any) => {
-                            const isAlreadySelected = cart.some(
-                              (cItem) => cItem.product.id === item.product.id && cItem.cartItemId !== item.cartItemId && cItem.selectedUnitId === u.id.toString()
-                            );
-                            return (
-                              <option key={u.id} value={u.id} disabled={isAlreadySelected}>
-                                {u.imeiNumber} {isAlreadySelected ? "(Already Selected)" : ""}
-                              </option>
-                            );
-                          })}
-                        </select>
-                      ) : (
-                        <input
-                          type="number"
-                          min="1"
-                          max={item.product.quantityInStock}
-                          className="border border-gray-300 rounded-md px-2 py-1 text-xs w-16 text-center font-semibold focus:ring-1 focus:ring-blue-500"
-                          value={item.quantity}
-                          onChange={(e) => updateQuantity(item.cartItemId, Math.min(item.product.quantityInStock, Math.max(1, parseInt(e.target.value) || 1)))}
-                          onKeyDown={(e) => handleNumberKeyDown(e, false)}
-                          onWheel={(e) => (e.target as HTMLInputElement).blur()}
-                        />
-                      )}
-                    </td>
-                    <td className="px-4 py-3 whitespace-nowrap font-bold text-gray-900 text-right">
-                      ₹{item.product.sellingPrice * item.quantity}
-                    </td>
-                    <td className="px-4 py-3 whitespace-nowrap text-right text-xs">
-                      <button
-                        onClick={() => removeFromCart(item.cartItemId)}
-                        className="text-red-600 hover:text-red-900 font-bold"
-                      >
-                        Remove
-                      </button>
-                    </td>
+            <div className="overflow-x-auto w-full">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-3 sm:px-4 py-2.5 text-left text-xs font-bold text-gray-500 uppercase">Item</th>
+                    <th className="px-3 sm:px-4 py-2.5 text-left text-xs font-bold text-gray-500 uppercase">Unit Price</th>
+                    <th className="px-3 sm:px-4 py-2.5 text-left text-xs font-bold text-gray-500 uppercase">Qty / IMEI</th>
+                    <th className="px-3 sm:px-4 py-2.5 text-right text-xs font-bold text-gray-500 uppercase">Total</th>
+                    <th className="px-3 sm:px-4 py-2.5 text-right text-xs font-bold text-gray-500 uppercase"></th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200 text-sm">
+                  {cart.map((item) => (
+                    <tr key={item.cartItemId} className="hover:bg-gray-50/50">
+                      <td className="px-3 sm:px-4 py-2.5 sm:py-3 whitespace-nowrap">
+                        <div className="font-bold text-gray-900 leading-snug">{item.product.name}</div>
+                        <div className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold">{item.product.productType}</div>
+                      </td>
+                      <td className="px-3 sm:px-4 py-2.5 sm:py-3 whitespace-nowrap text-gray-900 font-medium">
+                        ₹{item.product.sellingPrice}
+                      </td>
+                      <td className="px-3 sm:px-4 py-2.5 sm:py-3 whitespace-nowrap">
+                        {item.product.productType === "serialized" || item.product.productType === "electronics" ? (
+                          <select
+                            className="border border-gray-300 rounded-md px-2 py-1 text-xs max-w-[150px] sm:max-w-[180px] font-medium focus:ring-1 focus:ring-blue-500"
+                            value={item.selectedUnitId}
+                            onChange={(e) => updateSelectedUnit(item.cartItemId, e.target.value)}
+                          >
+                            {item.product.units?.map((u: any) => {
+                              const isAlreadySelected = cart.some(
+                                (cItem) => cItem.product.id === item.product.id && cItem.cartItemId !== item.cartItemId && cItem.selectedUnitId === u.id.toString()
+                              );
+                              return (
+                                <option key={u.id} value={u.id} disabled={isAlreadySelected}>
+                                  {u.imeiNumber} {isAlreadySelected ? "(Selected)" : ""}
+                                </option>
+                              );
+                            })}
+                          </select>
+                        ) : (
+                          <input
+                            type="number"
+                            min="1"
+                            max={item.product.quantityInStock}
+                            className="border border-gray-300 rounded-md px-2 py-1 text-xs w-16 text-center font-semibold focus:ring-1 focus:ring-blue-500"
+                            value={item.quantity}
+                            onChange={(e) => updateQuantity(item.cartItemId, Math.min(item.product.quantityInStock, Math.max(1, parseInt(e.target.value) || 1)))}
+                            onKeyDown={(e) => handleNumberKeyDown(e, false)}
+                            onWheel={(e) => (e.target as HTMLInputElement).blur()}
+                          />
+                        )}
+                      </td>
+                      <td className="px-3 sm:px-4 py-2.5 sm:py-3 whitespace-nowrap font-bold text-gray-900 text-right">
+                        ₹{item.product.sellingPrice * item.quantity}
+                      </td>
+                      <td className="px-3 sm:px-4 py-2.5 sm:py-3 whitespace-nowrap text-right text-xs">
+                        <button
+                          onClick={() => removeFromCart(item.cartItemId)}
+                          className="text-red-600 hover:text-red-900 font-bold px-1.5 py-1 rounded hover:bg-red-50"
+                        >
+                          Remove
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
 
@@ -763,24 +789,26 @@ export default function BillingPage() {
         </div>
 
         {/* Generate Invoice Button */}
-        <div className="border-t pt-4 mt-4">
+        <div className="border-t border-gray-100 pt-4 mt-4">
           <button
             onClick={handleCheckout}
             disabled={isSaving || cart.length === 0 || (phone.trim().length > 0 && customerName.trim() === "") || parseFloat(sgstPercent) > 100 || parseFloat(cgstPercent) > 100 || parseFloat(discount || "0") > grossTotal}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold py-3.5 rounded-lg shadow-sm transition disabled:opacity-50 disabled:cursor-not-allowed text-sm uppercase tracking-wider"
+            className="relative w-full overflow-hidden bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 active:scale-[.98] text-white font-extrabold py-4 rounded-xl shadow-lg shadow-blue-500/30 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none text-sm uppercase tracking-widest"
           >
-            {isSaving ? "Creating Invoice..." : "Generate & Print Invoice"}
+            <span className="relative z-10">{isSaving ? "⏳ Creating Invoice..." : "🧾 Generate & Print Invoice"}</span>
+            <span className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300 rounded-xl"></span>
           </button>
         </div>
 
+        </div>
       </div>
 
       {/* PRINT RECEIPT MODAL */}
       {showPrintModal && createdBill && (
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50 p-4 overflow-y-auto">
-          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full flex flex-col max-h-[90vh]">
-            <div className="px-6 py-4 bg-gray-50 border-b flex justify-between items-center rounded-t-lg">
-              <h3 className="text-lg font-bold text-gray-900">Tax Invoice Generated Successfully</h3>
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50 p-2 sm:p-4 overflow-y-auto">
+          <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full flex flex-col max-h-[95vh] sm:max-h-[90vh]">
+            <div className="px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 border-b flex justify-between items-center rounded-t-xl">
+              <h3 className="text-base sm:text-lg font-bold text-gray-900">Tax Invoice Generated Successfully</h3>
               <button
                 onClick={closePrintModal}
                 className="text-gray-400 hover:text-gray-500 text-2xl font-semibold focus:outline-none"
@@ -790,10 +818,10 @@ export default function BillingPage() {
             </div>
 
             {/* Printable Area - identical structure */}
-            <div className="flex-1 overflow-y-auto p-6 bg-gray-100">
+            <div className="flex-1 overflow-y-auto p-2 sm:p-6 bg-gray-100">
               <div
                 ref={printComponentRef}
-                className="p-1"
+                className="p-0.5 sm:p-1"
                 style={{ width: "100%", maxWidth: "800px", margin: "0 auto" }}
               >
                 <InvoiceTemplate

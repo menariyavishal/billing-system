@@ -90,11 +90,11 @@ export default function InvoiceTemplate({
   const cAmt = taxableAmt * (parseFloat(cgstPercent || "0") / 100);
 
   return (
-    <div className="border-[3px] border-[#1b3f8b] p-4 bg-white text-black font-sans text-[11px] select-none shadow-sm rounded-sm flex flex-col min-h-[27.6cm]">
+    <div className="border-[3px] border-[#1b3f8b] p-2 sm:p-4 bg-white text-black font-sans text-[11px] select-none shadow-sm rounded-sm flex flex-col min-h-0 sm:min-h-[27.6cm] overflow-hidden w-full max-w-full">
       {/* Header and Table wrapper to push footer down */}
       <div className="flex-1 flex flex-col">
       {/* Header matching original bill */}
-      <div className="border-2 border-[#1b3f8b] p-3 mb-3">
+      <div className="border-2 border-[#1b3f8b] p-2 sm:p-3 mb-3 overflow-hidden">
         <div className="flex justify-between items-center border-b border-[#1b3f8b] pb-2 mb-2">
           <div>
             <span className="bg-[#1b3f8b] text-white px-3 py-1 font-extrabold uppercase text-[10px] tracking-wider rounded-sm">
@@ -127,13 +127,13 @@ export default function InvoiceTemplate({
           <div className="w-14"></div>
         </div>
 
-       <div className="bg-[#1b3f8b] rounded-md py-3 px-4 flex items-center">
+       <div className="bg-[#1b3f8b] rounded-md py-2 sm:py-3 px-2 sm:px-4 flex flex-wrap items-center gap-1 sm:gap-0">
   
-  <div className="bg-yellow-400 text-[#1b3f8b] font-black px-4 py-1 rounded mr-4 text-sm">
+  <div className="bg-yellow-400 text-[#1b3f8b] font-black px-2 sm:px-4 py-1 rounded sm:mr-4 text-[9px] sm:text-sm">
     WE BELIEVE IN QUALITY
   </div>
 
-  <div className="flex-1 text-center text-white text-xs font-bold tracking-wide">
+  <div className="flex-1 text-center text-white text-[7px] sm:text-xs font-bold tracking-wide leading-tight">
     MOBILE | COMPUTER | LAPTOP | PRINTER | AC | CCTV | LED TV | REFRIGERATOR | WASHING MACHINE
   </div>
 
@@ -148,8 +148,8 @@ export default function InvoiceTemplate({
       </div>
 
       {/* Metadata */}
-      <div className="grid grid-cols-2 border border-[#1b3f8b] mb-3 text-[10px]">
-        <div className="p-2 border-r border-[#1b3f8b] flex flex-col justify-between min-h-[50px]">
+      <div className="grid grid-cols-1 sm:grid-cols-2 border border-[#1b3f8b] mb-3 text-[10px]">
+        <div className="p-2 sm:border-r border-b sm:border-b-0 border-[#1b3f8b] flex flex-col justify-between min-h-[50px]">
           <div>
             <span className="font-extrabold text-[#1b3f8b] text-[12px]">M/s. </span>
             <span className="underline font-bold text-gray-800 text-[14px]">
@@ -186,64 +186,66 @@ export default function InvoiceTemplate({
       </div>
 
       {/* Items Table */}
-      <table className="w-full border-collapse border border-[#1b3f8b] mb-3 text-[10px]">
-        <thead>
-          <tr className="border-b border-[#1b3f8b] bg-blue-50/30 text-[#1b3f8b]">
-            <th className="border-r border-[#1b3f8b] p-1.5 text-left w-10 font-extrabold text-[12px]">No.</th>
-            <th className="border-r border-[#1b3f8b] p-1.5 text-left font-extrabold text-[12px]">Particulars</th>
-            <th className="border-r border-[#1b3f8b] p-1.5 text-center w-12 font-extrabold text-[12px]">Qty.</th>
-            <th className="border-r border-[#1b3f8b] p-1.5 text-right w-20 font-extrabold text-[12px]">Rate</th>
-            <th className="p-1.5 text-right w-24 font-extrabold text-[12px]">Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cartItems.map((item: any, idx: number) => {
-            const pBrand = item.product ? item.product.brand : item.brand;
-            const pName = item.product ? item.product.name : item.name;
-            const pRate = item.product ? item.product.sellingPrice : parseFloat(item.unitPrice || "0");
-            const pQty = item.quantity;
-            const pTotal = item.product ? (item.product.sellingPrice * item.quantity) : parseFloat(item.lineTotal || "0");
-            
-            // Reverse calculate base amount from gross total
-            const totalGstPercent = parseFloat(sgstPercent || "0") + parseFloat(cgstPercent || "0");
-            const baseTotal = pTotal / (1 + totalGstPercent / 100);
-
-            const imei = item.productUnit?.imeiNumber || ((item.product?.productType === "serialized" || item.product?.productType === "electronics") && item.product.units?.find((u: any) => u.id.toString() === item.selectedUnitId)?.imeiNumber);
-
-            return (
-              <tr key={idx} className="border-b border-[#1b3f8b]">
-                <td className="border-r border-[#1b3f8b] p-1.5 text-left text-[13px]">{idx + 1}</td>
-                <td className="border-r border-[#1b3f8b] p-1.5 text-left">
-                  {pBrand && <div className="font-extrabold text-[#1b3f8b] text-[12px] uppercase tracking-wider mb-0.5">{pBrand}</div>}
-                  <div className="font-bold text-gray-800 text-[14px]">{pName}</div>
-                  {imei && (
-                    <div className="text-[13px] text-black font-extrabold mt-1">
-                      {item.product?.productType === "electronics" ? "S M No." : "IMEI"}: {imei}
-                    </div>
-                  )}
-                </td>
-                <td className="border-r border-[#1b3f8b] p-1.5 text-center font-bold text-[13px]">{pQty}</td>
-                <td className="border-r border-[#1b3f8b] p-1.5 text-right font-bold text-[13px]">₹{pRate}</td>
-                <td className="p-1.5 text-right font-bold text-[13px]">₹{baseTotal.toFixed(2)}</td>
-              </tr>
-            );
-          })}
-          {/* Fill remaining empty rows to maintain minimum height */}
-          {Array.from({ length: Math.max(0, 4 - cartItems.length) }).map((_, idx) => (
-            <tr key={`empty-${idx}`} className="border-b border-[#1b3f8b] h-8">
-              <td className="border-r border-[#1b3f8b] p-1.5"></td>
-              <td className="border-r border-[#1b3f8b] p-1.5"></td>
-              <td className="border-r border-[#1b3f8b] p-1.5"></td>
-              <td className="border-r border-[#1b3f8b] p-1.5"></td>
-              <td className="p-1.5"></td>
+      <div className="w-full overflow-hidden mb-3">
+        <table className="w-full border-collapse border border-[#1b3f8b] text-[10px] table-fixed">
+          <thead>
+            <tr className="border-b border-[#1b3f8b] bg-blue-50/30 text-[#1b3f8b]">
+              <th className="border-r border-[#1b3f8b] px-0.5 py-1 sm:p-1.5 text-left w-[24px] sm:w-10 font-extrabold text-[9.5px] sm:text-[12px]">No.</th>
+              <th className="border-r border-[#1b3f8b] p-1 sm:p-1.5 text-left font-extrabold text-[9.5px] sm:text-[12px]">Particulars</th>
+              <th className="border-r border-[#1b3f8b] px-0.5 py-1 sm:p-1.5 text-center w-[26px] sm:w-12 font-extrabold text-[9.5px] sm:text-[12px]">Qty.</th>
+              <th className="border-r border-[#1b3f8b] px-1 py-1 sm:p-1.5 text-right w-[58px] sm:w-20 font-extrabold text-[9.5px] sm:text-[12px]">Rate</th>
+              <th className="px-1 py-1 sm:p-1.5 text-right w-[74px] sm:w-24 font-extrabold text-[9.5px] sm:text-[12px]">Amount</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {cartItems.map((item: any, idx: number) => {
+              const pBrand = item.product ? item.product.brand : item.brand;
+              const pName = item.product ? item.product.name : item.name;
+              const pRate = item.product ? item.product.sellingPrice : parseFloat(item.unitPrice || "0");
+              const pQty = item.quantity;
+              const pTotal = item.product ? (item.product.sellingPrice * item.quantity) : parseFloat(item.lineTotal || "0");
+              
+              // Reverse calculate base amount from gross total
+              const totalGstPercent = parseFloat(sgstPercent || "0") + parseFloat(cgstPercent || "0");
+              const baseTotal = pTotal / (1 + totalGstPercent / 100);
+
+              const imei = item.productUnit?.imeiNumber || ((item.product?.productType === "serialized" || item.product?.productType === "electronics") && item.product.units?.find((u: any) => u.id.toString() === item.selectedUnitId)?.imeiNumber);
+
+              return (
+                <tr key={idx} className="border-b border-[#1b3f8b]">
+                  <td className="border-r border-[#1b3f8b] px-0.5 py-1 sm:p-1.5 text-left text-[10px] sm:text-[13px]">{idx + 1}</td>
+                  <td className="border-r border-[#1b3f8b] p-1 sm:p-1.5 text-left min-w-0 overflow-hidden">
+                    {pBrand && <div className="font-extrabold text-[#1b3f8b] text-[9px] sm:text-[12px] uppercase tracking-wider mb-0.5">{pBrand}</div>}
+                    <div className="font-bold text-gray-800 text-[11px] sm:text-[14px] break-words leading-tight">{pName}</div>
+                    {imei && (
+                      <div className="text-[9px] sm:text-[12px] text-black font-extrabold mt-0.5 break-all leading-tight">
+                        {item.product?.productType === "electronics" ? "S M No." : "IMEI"}: {imei}
+                      </div>
+                    )}
+                  </td>
+                  <td className="border-r border-[#1b3f8b] px-0.5 py-1 sm:p-1.5 text-center font-bold text-[10px] sm:text-[13px]">{pQty}</td>
+                  <td className="border-r border-[#1b3f8b] px-1 py-1 sm:p-1.5 text-right font-bold text-[9.5px] sm:text-[13px] tabular-nums tracking-tight sm:tracking-normal overflow-hidden whitespace-nowrap">₹{pRate}</td>
+                  <td className="px-1 py-1 sm:p-1.5 text-right font-bold text-[9.5px] sm:text-[13px] tabular-nums tracking-tight sm:tracking-normal overflow-hidden whitespace-nowrap">₹{baseTotal.toFixed(2)}</td>
+                </tr>
+              );
+            })}
+            {/* Fill remaining empty rows to maintain minimum height */}
+            {Array.from({ length: Math.max(0, 4 - cartItems.length) }).map((_, idx) => (
+              <tr key={`empty-${idx}`} className="border-b border-[#1b3f8b] h-6 sm:h-8">
+                <td className="border-r border-[#1b3f8b] p-1 sm:p-1.5"></td>
+                <td className="border-r border-[#1b3f8b] p-1 sm:p-1.5"></td>
+                <td className="border-r border-[#1b3f8b] p-1 sm:p-1.5"></td>
+                <td className="border-r border-[#1b3f8b] p-1 sm:p-1.5"></td>
+                <td className="p-1 sm:p-1.5"></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       </div>
 
       {/* Bottom section with totals & bank details */}
-      <div className="grid grid-cols-2 gap-4 mb-3 text-[10px]">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-3 text-[10px]">
         <div>
           {/* Bank Details */}
           <div className="border border-[#1b3f8b] p-2 text-[8px] leading-normal text-gray-800 flex justify-between items-center">
