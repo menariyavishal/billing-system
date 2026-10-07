@@ -229,30 +229,30 @@ export default function DashboardPage() {
   const trendData = stats?.trends?.[trendType] || [];
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="min-w-0 max-w-full space-y-6 sm:space-y-8 pb-8 sm:pb-12 overflow-x-hidden">
       {/* Welcome & Quick Info */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 bg-white border border-gray-200 flex items-center justify-center p-1">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-100">
+        <div className="flex min-w-0 items-center gap-3">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl overflow-hidden flex-shrink-0 bg-white border border-gray-200 flex items-center justify-center p-1">
             <img src="/logovcd.png" alt="Logo" className="w-full h-full object-contain" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-black tracking-tight">Vision Codex Demo</h2>
-            <p className="text-sm text-gray-500 mt-0.5">
+            <h2 className="text-lg sm:text-2xl font-bold text-black tracking-tight break-words">Vision Codex Demo</h2>
+            <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
               Real-time business inventory status and billing sales overview.
             </p>
           </div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex w-full flex-col min-[420px]:flex-row sm:w-auto gap-2">
           <button
             onClick={fetchData}
-            className="flex items-center gap-1.5 bg-gray-50 hover:bg-gray-100 text-gray-700 font-semibold py-2 px-3 border border-gray-200 rounded-lg text-sm transition"
+            className="flex flex-1 items-center justify-center gap-1.5 bg-gray-50 hover:bg-gray-100 text-gray-700 font-semibold py-2 px-3 border border-gray-200 rounded-lg text-sm transition sm:flex-none"
           >
             🔄 Refresh
           </button>
           <Link
             href="/billing"
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg text-sm transition shadow-sm"
+            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg text-sm transition shadow-sm text-center sm:flex-none"
           >
             ➕ New Invoice
           </Link>
@@ -260,16 +260,16 @@ export default function DashboardPage() {
       </div>
 
       {/* WhatsApp Integration Status Banner/Card */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row items-center justify-between gap-6 transition-all duration-300 hover:shadow-md">
-        <div className="flex items-start gap-4">
+      <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-all duration-300 hover:shadow-md">
+        <div className="flex min-w-0 items-start gap-3 sm:gap-4 w-full">
          <div className="p-3 bg-green-50 text-green-600 rounded-xl shrink-0">
-            <FaWhatsapp className="w-8 h-8" />
+            <FaWhatsapp className="w-7 h-7 sm:w-8 sm:h-8" />
          </div> 
-          <div>
-            <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+          <div className="min-w-0">
+            <h3 className="text-base sm:text-lg font-bold text-gray-800 flex items-center gap-2 flex-wrap">
               WhatsApp Invoice Delivery
               {whatsappSettings?.enabled && (
-                <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase ${whatsappSettings.status === "connected"
+                <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase ${whatsappSettings.status === "connected"
                     ? "bg-green-100 text-green-800 animate-pulse"
                     : whatsappSettings.status === "connecting" || whatsappSettings.status === "QR_READY"
                       ? "bg-amber-100 text-amber-800 animate-pulse"
@@ -279,7 +279,7 @@ export default function DashboardPage() {
                 </span>
               )}
             </h3>
-            <p className="text-xs text-gray-500 mt-1 max-w-xl">
+            <p className="text-xs text-gray-500 mt-1 max-w-full break-words">
               Connect Vision Codex's WhatsApp account to automatically deliver professionally-formatted PDF invoices directly to clients upon checkout.
             </p>
             {whatsappSettings?.status === "connected" && whatsappSettings?.ownerPhone && (
@@ -291,12 +291,12 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="shrink-0 flex flex-col items-center gap-3">
+        <div className="shrink-0 w-full sm:w-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           {!whatsappSettings || whatsappSettings.status === "disconnected" || (whatsappSettings.status === "connecting" && whatsappSettings.qrCode) ? (
             <button
               onClick={handleConnectWhatsapp}
               disabled={whatsappLoading}
-              className="bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 px-6 rounded-lg text-sm transition shadow-sm hover:shadow-md disabled:opacity-50"
+              className="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 px-4 sm:px-6 rounded-lg text-sm transition shadow-sm hover:shadow-md disabled:opacity-50"
             >
               {whatsappLoading ? "Initializing..." : "🔌 Connect Now"}
             </button>
@@ -304,14 +304,14 @@ export default function DashboardPage() {
             <button
               onClick={handleDisconnectWhatsapp}
               disabled={whatsappDisconnecting}
-              className="bg-red-50 hover:bg-red-100 text-red-600 font-bold py-2 px-4 rounded-lg text-sm border border-red-200 transition"
+              className="w-full sm:w-auto bg-red-50 hover:bg-red-100 text-red-600 font-bold py-2 px-4 rounded-lg text-sm border border-red-200 transition"
             >
               {whatsappDisconnecting ? "Disconnecting..." : "❌ Disconnect Session"}
             </button>
           ) : (
             <button
               disabled
-              className="bg-amber-100 text-amber-700 font-bold py-2.5 px-6 rounded-lg text-sm flex items-center gap-2"
+              className="w-full sm:w-auto bg-amber-100 text-amber-700 font-bold py-2.5 px-4 sm:px-6 rounded-lg text-sm flex items-center justify-center gap-2"
             >
               <div className="w-4 h-4 border-2 border-amber-300 border-t-amber-700 rounded-full animate-spin"></div>
               Connecting...
@@ -322,18 +322,18 @@ export default function DashboardPage() {
 
       {/* OVERDUE PAYMENTS REMINDER COMPONENT */}
       {overduePayments.length > 0 && (
-        <div className="bg-red-50 border border-red-200 p-6 rounded-xl shadow-sm">
+        <div className="bg-red-50 border border-red-200 p-4 sm:p-6 rounded-xl shadow-sm">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-2 bg-red-100 text-red-600 rounded-lg">
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
             </div>
-            <h3 className="text-lg font-bold text-red-800">Urgent: Overdue Payments (15+ Days)</h3>
+            <h3 className="text-base sm:text-lg font-bold text-red-800 break-words">Urgent: Overdue Payments (15+ Days)</h3>
           </div>
           
           <div className="max-h-[340px] overflow-y-auto pr-2 custom-scrollbar">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               {overduePayments.map((bill) => {
                 const handleSendReminder = async () => {
                   const phone = bill.customer?.phone || bill.customerPhone;
@@ -377,7 +377,7 @@ export default function DashboardPage() {
                 };
 
                 return (
-                  <div key={bill.id} className="bg-white rounded-lg p-4 shadow-sm border border-red-100 flex flex-col justify-between">
+                  <div key={bill.id} className="min-w-0 bg-white rounded-lg p-3 sm:p-4 shadow-sm border border-red-100 flex flex-col justify-between">
                     <div>
                       <div className="flex justify-between items-start mb-2">
                         <div className="font-bold text-gray-900 truncate" title={bill.customer?.name}>
@@ -387,17 +387,17 @@ export default function DashboardPage() {
                           #{bill.billNumber}
                         </Link>
                       </div>
-                      <div className="text-sm text-gray-600 mb-1">{bill.customer?.phone || bill.customerPhone || "No Phone"}</div>
+                      <div className="text-xs sm:text-sm text-gray-600 mb-1">{bill.customer?.phone || bill.customerPhone || "No Phone"}</div>
                       <div className="text-sm font-black text-red-600">Due: ₹{parseFloat(bill.dueAmount).toFixed(2)}</div>
                       <div className="text-xs text-gray-500 mt-1">Bill Date: {new Date(bill.createdAt).toLocaleDateString()}</div>
                     </div>
                     
                     {(bill.customer?.phone || bill.customerPhone) && (
-                      <div className="flex gap-2 mt-4 pt-3 border-t border-gray-100">
+                      <div className="flex gap-2 mt-3 sm:mt-4 pt-3 border-t border-gray-100">
                         <button 
                           onClick={handleSendReminder}
                           disabled={sendingWhatsappId === bill.id || !whatsappSettings || whatsappSettings.status !== "connected"}
-                          className="flex-1 flex justify-center items-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white py-1.5 rounded-md text-sm font-bold transition disabled:opacity-50"
+                          className="flex-1 flex justify-center items-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white py-1.5 rounded-md text-xs sm:text-sm font-bold transition disabled:opacity-50"
                         >
                           {sendingWhatsappId === bill.id ? (
                             <span className="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full"></span>
@@ -490,7 +490,7 @@ export default function DashboardPage() {
           <div className="flex justify-between items-start">
             <div>
               <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Monthly Sales</p>
-              <h3 className="text-2xl xl:text-3xl font-extrabold text-gray-800 mt-2 break-words">₹{stats?.monthlySales?.toFixed(2)}</h3>
+              <h3 className="text-2xl xl:text-3xl font-extrabold text-gray-800 mt-2 break-words">{stats?.monthlySales?.toFixed(2)}</h3>
             </div>
             <span className="p-2 bg-cyan-55 rounded-lg text-cyan-600 text-lg">📅</span>
           </div>
@@ -516,23 +516,22 @@ export default function DashboardPage() {
       </div>
 
       {/* Main Charts & Notifications Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
         {/* Sales Trend Chart (Col span 2) */}
-        <div className="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between">
-          <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6">
+        <div className="min-w-0 lg:col-span-2 bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between">
+          <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-4 sm:mb-6">
             <div>
-              <h3 className="text-lg font-bold text-gray-800">Sales Analytics Trend</h3>
+              <h3 className="text-base sm:text-lg font-bold text-gray-800">Sales Analytics Trend</h3>
               <p className="text-xs text-gray-400">Track earnings growth over different periods</p>
             </div>
 
             {/* Trend Filter Toggles */}
-            <div className="flex border border-gray-200 rounded-lg p-0.5 bg-gray-50">
+            <div className="flex border border-gray-200 rounded-lg p-0.5 bg-gray-50 w-full sm:w-auto">
               {(["daily", "weekly", "monthly"] as const).map((type) => (
                 <button
                   key={type}
                   onClick={() => setTrendType(type)}
-                  className={`py-1.5 px-3 rounded-md text-xs font-bold capitalize transition ${trendType === type
+                  className={`flex-1 py-1.5 px-2 sm:px-3 rounded-md text-xs font-bold capitalize transition ${trendType === type
                       ? "bg-white text-blue-600 shadow-sm"
                       : "text-gray-500 hover:text-gray-900"
                     }`}
@@ -543,7 +542,7 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="h-72 w-full">
+          <div className="h-64 sm:h-72 w-full">
             {renderChart(
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={trendData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
@@ -568,27 +567,27 @@ export default function DashboardPage() {
         </div>
 
         {/* Low Stock Alerts Notification Widget */}
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between max-h-[400px]">
+        <div className="min-w-0 bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between max-h-[360px] sm:max-h-[400px]">
           <div>
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-bold text-gray-800">Inventory Alerts</h3>
+            <div className="flex justify-between items-center mb-3 sm:mb-4">
+              <h3 className="text-base sm:text-lg font-bold text-gray-800">Inventory Alerts</h3>
               <span className="bg-red-50 text-red-600 text-xs px-2 py-0.5 rounded-full font-bold">
                 {notifications.length} Alerts
               </span>
             </div>
 
             {/* Scrollable list */}
-            <div className="overflow-y-auto space-y-3 pr-1 max-h-[280px]">
+            <div className="overflow-y-auto space-y-2 sm:space-y-3 pr-1 max-h-[240px] sm:max-h-[280px]">
               {notifications.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-12 text-gray-400 text-center">
-                  <span className="text-3xl mb-2">✅</span>
-                  <span className="text-sm font-semibold">All products in healthy stock</span>
+                <div className="flex flex-col items-center justify-center py-8 sm:py-12 text-gray-400 text-center">
+                  <span className="text-2xl sm:text-3xl mb-2">✅</span>
+                  <span className="text-xs sm:text-sm font-semibold">All products in healthy stock</span>
                 </div>
               ) : (
                 notifications.map((notif) => (
                   <div
                     key={notif.id}
-                    className={`p-3 rounded-lg border flex flex-col gap-1 transition hover:shadow-sm ${notif.severity === "critical"
+                    className={`p-2 sm:p-3 rounded-lg border flex flex-col gap-1 transition hover:shadow-sm ${notif.severity === "critical"
                         ? "bg-rose-50/50 border-rose-200"
                         : notif.severity === "danger"
                           ? "bg-amber-50/50 border-amber-200"
@@ -596,9 +595,9 @@ export default function DashboardPage() {
                       }`}
                   >
                     <div className="flex justify-between items-center">
-                      <span className="font-semibold text-gray-800 text-sm truncate max-w-[150px]">{notif.name}</span>
+                      <span className="min-w-0 font-semibold text-gray-800 text-xs sm:text-sm truncate max-w-[120px] sm:max-w-[150px]">{notif.name}</span>
                       <span
-                        className={`text-[10px] font-extrabold px-1.5 py-0.5 rounded uppercase ${notif.severity === "critical"
+                        className={`text-[9px] sm:text-[10px] font-extrabold px-1.5 py-0.5 rounded uppercase ${notif.severity === "critical"
                             ? "bg-red-100 text-red-800"
                             : notif.severity === "danger"
                               ? "bg-amber-100 text-amber-800"
@@ -608,7 +607,7 @@ export default function DashboardPage() {
                         {notif.severity === "critical" ? "OUT OF STOCK" : "LOW STOCK"}
                       </span>
                     </div>
-                    <div className="text-xs text-gray-500 flex justify-between">
+                    <div className="text-[10px] sm:text-xs text-gray-500 flex justify-between">
                       <span>Brand: {notif.brand || "Generic"}</span>
                       <span>Stock: <strong className={notif.severity === "critical" ? "text-red-600" : "text-amber-600"}>{notif.quantity}</strong></span>
                     </div>
@@ -618,25 +617,24 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="border-t pt-3 mt-3 flex justify-between items-center text-xs">
+          <div className="border-t pt-2 sm:pt-3 mt-3 flex justify-between items-center text-xs">
             <span className="text-gray-400">Sorted by critical severity</span>
             <Link href="/inventory" className="text-blue-600 hover:underline font-bold">
               Manage Stock &rarr;
             </Link>
           </div>
         </div>
-
       </div>
 
       {/* Categories & Fast/Slow Product Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
 
         {/* Category distribution */}
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-          <h3 className="text-lg font-bold text-gray-800 mb-2">Stock by Category</h3>
-          <p className="text-xs text-gray-400 mb-6 font-medium">Visual distribution of inventory categories</p>
+        <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-100">
+          <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-2">Stock by Category</h3>
+          <p className="text-xs text-gray-400 mb-4 sm:mb-6 font-medium">Visual distribution of inventory categories</p>
 
-          <div className="h-64">
+          <div className="h-48 sm:h-64">
             {renderChart(
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={stats?.categoryStock || []} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
@@ -660,29 +658,29 @@ export default function DashboardPage() {
 
         {/* Fast-Moving Items */}
         <div 
-          className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between cursor-pointer hover:shadow-md hover:border-blue-200 transition-all group relative"
+          className="min-w-0 bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between cursor-pointer hover:shadow-md hover:border-blue-200 transition-all group relative"
           onClick={() => setShowSoldItemsModal(true)}
         >
-          <div className="absolute top-6 right-6 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-            <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+          <div className="absolute top-4 right-4 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-blue-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+            <svg className="w-3 h-3 sm:w-4 sm:h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
           </div>
           <div>
-            <h3 className="text-lg font-bold text-gray-800 mb-2">🚀 Fast-Moving Products</h3>
-            <p className="text-xs text-gray-400 mb-6 group-hover:text-blue-500 transition-colors">Click to view all sold items history</p>
+            <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-2">🚀 Fast-Moving Products</h3>
+            <p className="text-xs text-gray-400 mb-4 sm:mb-6 group-hover:text-blue-500 transition-colors">Click to view all sold items history</p>
 
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {stats?.movement?.fastMoving?.length === 0 ? (
-                <div className="text-center py-12 text-gray-400 text-xs">No sales recorded yet.</div>
+                <div className="text-center py-8 sm:py-12 text-gray-400 text-xs">No sales recorded yet.</div>
               ) : (
                 stats?.movement?.fastMoving?.map((item: any, idx: number) => (
-                  <div key={item.id} className="flex items-center justify-between border-b last:border-0 pb-3 last:pb-0">
-                    <div className="flex items-center gap-3">
-                      <span className="w-6 h-6 rounded-full bg-blue-50 text-blue-600 font-bold flex items-center justify-center text-xs">
+                  <div key={item.id} className="flex min-w-0 items-center justify-between gap-2 border-b last:border-0 pb-2 sm:pb-3 last:pb-0">
+                    <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+                      <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-blue-50 text-blue-600 font-bold flex items-center justify-center text-[10px] sm:text-xs">
                         {idx + 1}
                       </span>
-                      <span className="font-semibold text-gray-800 text-sm truncate max-w-[180px]">{item.name}</span>
+                      <span className="min-w-0 font-semibold text-gray-800 text-xs sm:text-sm truncate max-w-[140px] sm:max-w-[180px]">{item.name}</span>
                     </div>
-                    <span className="bg-green-55 text-green-700 text-xs font-extrabold px-2.5 py-1 rounded-full">
+                    <span className="bg-green-55 text-green-700 text-[10px] sm:text-xs font-extrabold px-2 py-1 rounded-full">
                       {item.quantity} sold
                     </span>
                   </div>
@@ -693,24 +691,24 @@ export default function DashboardPage() {
         </div>
 
         {/* Slow-Moving Items */}
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between">
+        <div className="min-w-0 bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between">
           <div>
-            <h3 className="text-lg font-bold text-gray-800 mb-2">⏳ Slow-Moving Items</h3>
-            <p className="text-xs text-gray-400 mb-6 font-medium">In-stock items with minimal sales</p>
+            <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-2">⏳ Slow-Moving Items</h3>
+            <p className="text-xs text-gray-400 mb-4 sm:mb-6 font-medium">In-stock items with minimal sales</p>
 
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {stats?.movement?.slowMoving?.length === 0 ? (
-                <div className="text-center py-12 text-gray-400 text-xs">No slow moving items detected.</div>
+                <div className="text-center py-8 sm:py-12 text-gray-400 text-xs">No slow moving items detected.</div>
               ) : (
                 stats?.movement?.slowMoving?.map((item: any, idx: number) => (
-                  <div key={item.id} className="flex items-center justify-between border-b last:border-0 pb-3 last:pb-0">
-                    <div className="flex items-center gap-3">
-                      <span className="w-6 h-6 rounded-full bg-purple-55 text-purple-600 font-bold flex items-center justify-center text-xs">
+                  <div key={item.id} className="flex min-w-0 items-center justify-between gap-2 border-b last:border-0 pb-2 sm:pb-3 last:pb-0">
+                    <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+                      <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-purple-55 text-purple-600 font-bold flex items-center justify-center text-[10px] sm:text-xs">
                         {idx + 1}
                       </span>
-                      <span className="font-semibold text-gray-800 text-sm truncate max-w-[180px]">{item.name}</span>
+                      <span className="min-w-0 font-semibold text-gray-800 text-xs sm:text-sm truncate max-w-[140px] sm:max-w-[180px]">{item.name}</span>
                     </div>
-                    <span className="bg-amber-55 text-amber-700 text-xs font-bold px-2.5 py-1 rounded-full">
+                    <span className="bg-amber-55 text-amber-700 text-[10px] sm:text-xs font-bold px-2 py-1 rounded-full">
                       {item.quantity} sold
                     </span>
                   </div>
@@ -723,39 +721,39 @@ export default function DashboardPage() {
       </div>
 
       {/* Quick Action Navigation Grid */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-        <h3 className="text-lg font-bold text-gray-800 mb-4">Quick Management Utilities</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-100">
+        <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-3 sm:mb-4">Quick Management Utilities</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           <Link
             href="/billing"
-            className="flex flex-col items-center justify-center p-4 border border-gray-100 rounded-lg hover:bg-blue-50/50 hover:border-blue-200 transition text-center text-decoration-none"
+            className="flex flex-col items-center justify-center p-3 sm:p-4 border border-gray-100 rounded-lg hover:bg-blue-50/50 hover:border-blue-200 transition text-center text-decoration-none"
           >
-            <span className="text-2xl mb-2">🧾</span>
-            <span className="text-xs font-bold text-gray-700">Record Sale</span>
+            <span className="text-xl sm:text-2xl mb-1 sm:mb-2">🧾</span>
+            <span className="text-xs sm:text-sm font-bold text-gray-700">Record Sale</span>
           </Link>
           <Link
             href="/inventory"
-            className="flex flex-col items-center justify-center p-4 border border-gray-100 rounded-lg hover:bg-emerald-50/50 hover:border-emerald-200 transition text-center text-decoration-none"
+            className="flex flex-col items-center justify-center p-3 sm:p-4 border border-gray-100 rounded-lg hover:bg-emerald-50/50 hover:border-emerald-200 transition text-center text-decoration-none"
           >
-            <span className="text-2xl mb-2">📦</span>
-            <span className="text-xs font-bold text-gray-700">Add Product</span>
+            <span className="text-xl sm:text-2xl mb-1 sm:mb-2">📦</span>
+            <span className="text-xs sm:text-sm font-bold text-gray-700">Add Product</span>
           </Link>
           <Link
             href="/analytics"
-            className="flex flex-col items-center justify-center p-4 border border-gray-100 rounded-lg hover:bg-amber-50/50 hover:border-amber-200 transition text-center text-decoration-none"
+            className="flex flex-col items-center justify-center p-3 sm:p-4 border border-gray-100 rounded-lg hover:bg-amber-50/50 hover:border-amber-200 transition text-center text-decoration-none"
           >
-            <span className="text-2xl mb-2">📊</span>
-            <span className="text-xs font-bold text-gray-700">Generate Report</span>
+            <span className="text-xl sm:text-2xl mb-1 sm:mb-2">📊</span>
+            <span className="text-xs sm:text-sm font-bold text-gray-700">Generate Report</span>
           </Link>
         </div>
       </div>
       {/* Official WhatsApp QR Connection Modal */}
       {showQrModal && (
         <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4 transition-all duration-300">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden border border-gray-100 transform transition-all scale-100">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[calc(100vh-2rem)] overflow-y-auto border border-gray-100 transform transition-all scale-100">
             {/* Modal Header */}
-            <div className="px-6 py-4 bg-green-600 text-white flex justify-between items-center">
-              <h3 className="font-extrabold text-lg flex items-center gap-2">
+            <div className="px-4 sm:px-6 py-4 bg-green-600 text-white flex justify-between items-center gap-3">
+              <h3 className="font-extrabold text-base sm:text-lg flex items-center gap-2">
                 <span>💬</span> Link WhatsApp Device
               </h3>
               <button
@@ -768,13 +766,13 @@ export default function DashboardPage() {
             </div>
 
             {/* Modal Body */}
-            <div className="p-6 flex flex-col items-center text-center">
+            <div className="p-4 sm:p-6 flex flex-col items-center text-center">
               <p className="text-sm font-semibold text-gray-700 mb-5">
                 Scan the QR code below using WhatsApp on your phone to link your account.
               </p>
 
               {/* QR Display Area */}
-              <div className="w-52 h-52 bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center p-3 relative mb-5">
+              <div className="w-48 h-48 sm:w-52 sm:h-52 bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center p-3 relative mb-5">
                 {whatsappSettings?.qrCode ? (
                   <QRCodeSVG
                     value={whatsappSettings.qrCode}
@@ -790,7 +788,7 @@ export default function DashboardPage() {
               </div>
 
               {/* Instructions */}
-              <div className="text-left w-full bg-gray-50 p-4 rounded-xl border border-gray-100 mb-6 space-y-2">
+              <div className="text-left w-full bg-gray-50 p-3 sm:p-4 rounded-xl border border-gray-100 mb-6 space-y-2">
                 <p className="text-xs font-bold text-gray-800 uppercase tracking-wider mb-1">
                   How to link your phone:
                 </p>
@@ -820,10 +818,10 @@ export default function DashboardPage() {
       {/* Today's Sales Breakdown Modal */}
       {showTodaySalesModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full overflow-hidden flex flex-col max-h-[85vh]">
-            <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full overflow-hidden flex flex-col max-h-[calc(100vh-2rem)]">
+            <div className="p-4 sm:p-6 border-b border-gray-100 flex justify-between items-center gap-3 bg-gray-50/50">
               <div>
-                <h2 className="text-xl font-bold text-gray-800">Today's Sales Breakdown</h2>
+                <h2 className="text-lg sm:text-xl font-bold text-gray-800">Today's Sales Breakdown</h2>
                 <p className="text-xs text-gray-500 mt-1">Detailed list of all items sold today</p>
               </div>
               <button
@@ -836,13 +834,14 @@ export default function DashboardPage() {
               </button>
             </div>
             
-            <div className="p-0 overflow-y-auto custom-scrollbar flex-1 bg-white">
+            <div className="p-0 overflow-auto custom-scrollbar flex-1 bg-white">
               {!stats?.todaySoldItems || stats.todaySoldItems.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-16 text-gray-400">
                   <span className="text-4xl mb-3">📭</span>
                   <p className="text-sm font-semibold">No sales recorded today.</p>
                 </div>
               ) : (
+                <div className="min-w-[760px]">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50 sticky top-0 z-10">
                     <tr>
@@ -891,14 +890,15 @@ export default function DashboardPage() {
                     ))}
                   </tbody>
                 </table>
+                </div>
               )}
             </div>
             
-            <div className="p-4 border-t border-gray-100 bg-gray-50 flex justify-between items-center">
+            <div className="p-4 border-t border-gray-100 bg-gray-50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-6">
               <span className="text-xs font-bold text-gray-500 uppercase">Total Items: {stats?.todaySoldItems?.reduce((sum: number, i: any) => sum + i.quantity, 0) || 0}</span>
-              <div className="flex gap-6 items-center">
-                <span className="text-lg font-bold text-gray-600">Total Sales: ₹{stats?.todaySales?.toFixed(2) || "0.00"}</span>
-                <span className={`text-lg font-black ${stats?.todayProfit > 0 ? 'text-green-600' : stats?.todayProfit < 0 ? 'text-red-500' : 'text-gray-600'}`}>
+              <div className="flex flex-wrap gap-x-4 gap-y-1 items-center">
+                <span className="text-base sm:text-lg font-bold text-gray-600">Total Sales: ₹{stats?.todaySales?.toFixed(2) || "0.00"}</span>
+                <span className={`text-base sm:text-lg font-black ${stats?.todayProfit > 0 ? 'text-green-600' : stats?.todayProfit < 0 ? 'text-red-500' : 'text-gray-600'}`}>
                   Total Profit: {stats?.todayProfit > 0 ? '+' : ''}₹{stats?.todayProfit?.toFixed(2) || "0.00"}
                 </span>
               </div>
